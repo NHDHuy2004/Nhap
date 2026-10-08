@@ -1,0 +1,233 @@
+@import "tailwindcss";
+
+@theme {
+  --color-night-950: #050014;
+  --color-night-900: #12002b;
+  --color-night-800: #2a0a3d;
+  --color-night-700: #3d1157;
+
+  --color-love-100: #ffe4ec;
+  --color-love-200: #ffc7d8;
+  --color-love-300: #ff9ab8;
+  --color-love-400: #ff7aa2;
+  --color-love-500: #ff5f8f;
+  --color-love-600: #ff3d6e;
+  --color-love-700: #e01f4f;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--color-night-950);
+  color: #f7eef5;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-love-500) 40%, transparent);
+  color: #fff;
+}
+
+/* Very faint lift so soft text stays readable over stars. */
+.text-lift {
+  text-shadow: 0 0 26px rgba(255, 154, 184, 0.16);
+}
+
+/* ---------------------------------- glow --------------------------------- */
+
+.glow-heart {
+  filter: drop-shadow(0 0 16px rgba(255, 63, 110, 0.55))
+    drop-shadow(0 0 52px rgba(255, 63, 110, 0.3));
+}
+
+/* -------------------------------- heartbeat ------------------------------ */
+
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  8% {
+    transform: scale(1.06);
+  }
+  16% {
+    transform: scale(1);
+  }
+  24% {
+    transform: scale(1.11);
+  }
+  36% {
+    transform: scale(1.01);
+  }
+  46% {
+    transform: scale(1.04);
+  }
+}
+
+.animate-heartbeat {
+  animation: heartbeat 1.9s ease-in-out infinite;
+}
+
+@keyframes glow-breathe {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.1);
+  }
+}
+
+.animate-glow-breathe {
+  animation: glow-breathe 1.9s ease-in-out infinite;
+}
+
+/* ------------------------------- floating -------------------------------- */
+
+@keyframes rise-up {
+  0% {
+    transform: translate3d(0, 15vh, 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--heart-fade, 0.5);
+  }
+  85% {
+    opacity: var(--heart-fade, 0.5);
+  }
+  100% {
+    transform: translate3d(0, -115vh, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: translate3d(-12px, 0, 0) rotate(-7deg);
+  }
+  50% {
+    transform: translate3d(12px, 0, 0) rotate(7deg);
+  }
+}
+
+.heart-riser {
+  animation: rise-up linear infinite;
+  will-change: transform;
+}
+
+.heart-sway {
+  animation: sway ease-in-out infinite alternate;
+}
+
+/* --------------------------------- clouds -------------------------------- */
+
+@keyframes cloud-drift {
+  0% {
+    transform: translate3d(-8%, 0, 0);
+  }
+  100% {
+    transform: translate3d(8%, 0, 0);
+  }
+}
+
+.animate-cloud {
+  animation: cloud-drift ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* --------------------------------- bursts -------------------------------- */
+
+@keyframes spark-burst {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--sx, 0), var(--sy, 0), 0) scale(0.2);
+    opacity: 0;
+  }
+}
+
+.spark {
+  animation: spark-burst 0.85s cubic-bezier(0.16, 0.84, 0.44, 1) forwards;
+}
+
+@keyframes phrase-float {
+  0% {
+    transform: translate3d(-50%, 6px, 0);
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(-50%, -74px, 0);
+    opacity: 0;
+  }
+}
+
+.phrase-pop {
+  animation: phrase-float 2.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+/* ---------------------------------- misc --------------------------------- */
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+.animate-bob {
+  animation: bob 2.6s ease-in-out infinite;
+}
+
+@keyframes equalizer {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.equalizer-bar {
+  height: 100%;
+  transform-origin: bottom;
+  animation: equalizer 0.9s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-heartbeat,
+  .animate-glow-breathe,
+  .heart-riser,
+  .heart-sway,
+  .animate-cloud,
+  .animate-bob,
+  .equalizer-bar,
+  .spark,
+  .phrase-pop {
+    animation: none !important;
+  }
+  .heart-riser {
+    opacity: 0;
+  }
+}
